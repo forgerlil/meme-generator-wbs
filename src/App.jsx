@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+
 import "./App.css";
 
 const meme_url = "https://api.imgflip.com/get_memes";
@@ -17,14 +19,11 @@ function App() {
     const [meme, setMeme] = useState({});
 
     useEffect(() => {
-        fetch(meme_url)
-            .then((response) => {
-                return response.json();
-            })
-            .then((memeData) => {
-                setMemes(memeData.data.memes);
-                setMeme(memeData.data.memes[0]);
-            });
+        axios.get(meme_url).then((memeData) => {
+            console.log(memeData)
+            setMemes(memeData.data.data.memes);
+            setMeme(memeData.data.data.memes[0]);
+        });
     }, []);
 
     return (
